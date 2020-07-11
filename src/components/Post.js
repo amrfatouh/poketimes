@@ -1,24 +1,28 @@
 import React , {Component} from 'react'
-import {connect} from 'react-redux'
-import {deletePost} from '../actions/postActions'
+
 
 class Post extends Component {
     handleClick=(e)=>{
-        this.props.deletePost(this.props.post.id);
+        let id = this.props.match.params.post_id;
+        this.props.deletePost(id);
         this.props.history.push('/');
     }
     render () {
-        const post = this.props.post ? (
+        let id = this.props.match.params.post_id;
+        const chosenPost = this.props.posts.find(function (post) {
+            return post.id === id
+        })
+        const post = chosenPost ? (
             <div className="post">
-                <h4 className="center">{this.props.post.title}</h4>
-                <p>{this.props.post.body}</p>
+                <h4 className="center">{chosenPost.title}</h4>
+                <p>{chosenPost.body}</p>
                 <div className="center">
                     <button className="btn grey" onClick={this.handleClick}>Delete Post</button>
                 </div>
             </div>
         ) : (
-            <div>
-                loading post...
+            <div className="center card-panel">
+                <h5>No posts have the id of {id}</h5>
             </div>
         )
         return (    
@@ -29,17 +33,4 @@ class Post extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    let id=ownProps.match.params.post_id;
-    return {
-        post: state.posts.find(post => post.id === id)
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deletePost: (id) => {dispatch(deletePost(id))}
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Post)
+export default Post
