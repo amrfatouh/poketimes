@@ -3,11 +3,12 @@ import React from 'react'
 class AddPost extends React.Component {
     state = {
         post: {
-            id: Math.random(),
+            id: Math.random().toString(),
             title: '',
             body: ''
         }
     }
+    num = 34;
     handleChangeTitle = (e) => {
         this.setState({
             post: {...this.state.post, title: e.target.value}
