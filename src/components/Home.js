@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Pokeball from '../pokeball.png'
+import { PostsContext } from '../contexts/PostsContext'
 
 class Home extends React.Component {
+    static contextType = PostsContext;
     render() {
-        const posts = this.props.posts;
+        const posts = this.context.posts;
         const postList = posts.length ? (
             posts.map(post => {
                 return (

@@ -1,16 +1,20 @@
-import React , {Component} from 'react'
+import React, { Component } from 'react'
+import { PostsContext } from '../contexts/PostsContext'
 
 
 class Post extends Component {
-    handleClick=(e)=>{
-        let id = this.props.match.params.post_id;
-        this.props.deletePost(id);
+    static contextType = PostsContext;
+    id = this.props.match.params.post_id;
+
+    handleClick = (e) => {
+        this.context.deletePost(this.id);
         this.props.history.push('/');
     }
-    render () {
-        let id = this.props.match.params.post_id;
-        const chosenPost = this.props.posts.find(function (post) {
-            return post.id === id
+    render() {
+        console.log(this.context.posts);
+        console.log(`id: ${this.id}`);
+        const chosenPost = this.context.posts.find((post) => {
+            return post.id === this.id
         })
         const post = chosenPost ? (
             <div className="post">
@@ -21,11 +25,11 @@ class Post extends Component {
                 </div>
             </div>
         ) : (
-            <div className="center card-panel">
-                <h5>No posts have the id of {id}</h5>
-            </div>
-        )
-        return (    
+                <div className="center card-panel">
+                    <h5>No posts have the id of {this.id}</h5>
+                </div>
+            )
+        return (
             <div className="container">
                 {post}
             </div>
