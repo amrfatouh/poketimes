@@ -1,38 +1,35 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import Pokeball from '../pokeball.png'
 import { PostsContext } from '../contexts/PostsContext'
 
-class Home extends React.Component {
-    static contextType = PostsContext;
-    render() {
-        const posts = this.context.posts;
-        const postList = posts.length ? (
-            posts.map(post => {
-                return (
-                    <div className="post card" key={post.id}>
-                        <img src={Pokeball} alt="a pokeball" />
-                        <div className="card-content">
-                            <Link className="red-text" to={'/' + post.id}>
-                                <span className="card-title">{post.title}</span>
-                            </Link>
-                            <p>{post.body}</p>
-                        </div>
+function Home() {
+    const { posts } = useContext(PostsContext);
+    const postList = posts.length ? (
+        posts.map(post => {
+            return (
+                <div className="post card" key={post.id}>
+                    <img src={Pokeball} alt="a pokeball" />
+                    <div className="card-content">
+                        <Link className="red-text" to={'/' + post.id}>
+                            <span className="card-title">{post.title}</span>
+                        </Link>
+                        <p>{post.body}</p>
                     </div>
-                )
-            })
-        ) : (
-                <div className="center">No posts yet</div>
+                </div>
             )
-
-        return (
-            <div className="container home">
-                <h4 className="center">Home</h4>
-                <Link to="/addpost"><button className="red btn btn-large">+ Add Post</button></Link>
-                {postList}
-            </div>
+        })
+    ) : (
+            <div className="center">No posts yet</div>
         )
-    }
+
+    return (
+        <div className="container home">
+            <h4 className="center">Home</h4>
+            <Link to="/addpost"><button className="red btn btn-large">+ Add Post</button></Link>
+            {postList}
+        </div>
+    )
 }
 
 export default Home
