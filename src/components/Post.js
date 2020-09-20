@@ -2,14 +2,14 @@ import React, { useContext } from 'react'
 import { PostsContext } from '../contexts/PostsContext'
 
 function Post(props) {
-    const { posts, deletePost } = useContext(PostsContext);
+    const { posts, dispatch } = useContext(PostsContext);
     const id = props.match.params.post_id;
     const chosenPost = posts.find((post) => {
         return post.id === id
     })
 
     const handleClick = () => {
-        deletePost(id);
+        dispatch({ type: "REMOVE_POST", id });
         props.history.push('/');
     }
 

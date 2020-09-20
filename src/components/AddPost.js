@@ -5,11 +5,11 @@ function AddPost(props) {
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
 
-    const { addPost } = useContext(PostsContext);
+    const { posts, dispatch } = useContext(PostsContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addPost(title, body);
+        dispatch({ type: "ADD_POST", post: { title, body } });
         props.history.push('/');
     }
     return (
